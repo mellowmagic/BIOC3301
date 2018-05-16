@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH -t 1:00:00
+#SBATCH -n 24
+#SBATCH -p short
+
+#Loading python Modules
+module load eb
+module load Miniconda2
+module load R
+
+#Activating virtual environment
+echo "Loading virtual environment"
+source activate qiime1
+
+#Setting Temporary Directory
+export TMPDIR=~/qiime_tmp
+
+#2D plots Acido
+echo "2dacido"
+time make_2d_plots.py -i ~/2018_02_smb/demultiplex/OTUs2/AcidoProteo/pcoaAcido/pcoa_weighted_unifrac_otu_table_D_0__Bacteria_D_1__Acidobacteria.txt -m ~/2018_02_smb/demultiplex/2018fullmap2.tsv -o 2d_plotsAcido/
+
+#deactivating virtual environment
+source deactivate

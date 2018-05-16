@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH -t 1:00:00
+#SBATCH -n 24
+#SBATCH -p short
+
+#Loading python Modules
+module load eb
+module load Miniconda2
+module load R
+
+#Activating virtual environment
+echo "Loading virtual environment"
+source activate qiime1
+
+#Setting Temporary Directory
+export TMPDIR=~/qiime_tmp
+
+#Filter for Precipitation- Acido
+echo "filterprecipitation"
+time filter_samples_from_otu_table.py -i ~/2018_02_smb/demultiplex/OTUs2/taxa_plots/table_mc34336_sorted_L2.biom -o wet.biom -m ~/2018_02_smb/demultiplex/2018fullmap2.tsv -s 'Precipitation:1'
+
+#deactivating virtual environment
+source deactivate

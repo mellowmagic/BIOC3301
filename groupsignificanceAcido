@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH -t 1:00:00
+#SBATCH -n 24
+#SBATCH -p short
+
+#Loading python Modules
+module load eb
+module load Miniconda2
+module load R
+
+#Activating virtual environment
+echo "Loading virtual environment"
+source activate qiime1
+
+#Setting Temporary Directory
+export TMPDIR=~/qiime_tmp
+
+#Groupsignificance Acidobacteria
+echo "groupsigAcido"
+
+time group_significance.py -i ~/2018_02_smb/demultiplex/OTUs2/AcidoProteo/otu_table_D_0__Bacteria_D_1__Acidobacteria.biom -m ~/2018_02_smb/demultiplex/2018fullmap2.tsv -c Precipitation -s kruskal_wallis -o kwAcido.txt
+
+time group_significance.py -i ~/2018_02_smb/demultiplex/OTUs2/AcidoProteo/otu_table_D_0__Bacteria_D_1__Acidobacteria.biom -m ~/2018_02_smb/demultiplex/2018fullmap2.tsv -c Precipitation -s mann_whitney_u -o mannwhuAcido.txt
+
+#deactivating virtual environment
+source deactivate

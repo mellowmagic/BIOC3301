@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH -t 1:00:00
+#SBATCH -n 24
+#SBATCH -p short
+
+#Loading python Modules
+module load eb
+module load Miniconda2
+module load R
+
+#Activating virtual environment
+echo "Loading virtual environment"
+source activate qiime1
+
+#Setting Temporary Directory
+export TMPDIR=~/qiime_tmp
+
+#beta diversity for Acidobacteria 
+echo "betadivAcido"
+time beta_diversity.py -i otu_table_D_1__Bacteria_D_1__Acidobacteria.biom -o beta_divAcido -t ~/SILVA_128_QIIME_release/trees/97/97_otus.tre
+
+#deactivating virtual environment
+source deactivate
+

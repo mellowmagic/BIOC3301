@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH -t 1:00:00
+#SBATCH -n 24
+#SBATCH -p short
+
+#Loading python Modules
+module load eb
+module load Miniconda2
+module load R
+
+#Activating virtual environment
+echo "Loading virtual environment"
+source activate qiime1
+
+#Setting Temporary Directory
+export TMPDIR=~/qiime_tmp
+
+#split into multiple OTU tables by taxonomy 
+echo "splitOTUsL2"
+time split_otu_table_by_taxonomy.py -i ~/2018_02_smb/demultiplex/OTUs2/taxa_plots/table_mc34336_sorted.biom -L 2 -o ./L2BIOMtables/
+
+
+#deactivating virtual environment
+source deactivate
+
